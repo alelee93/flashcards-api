@@ -46,6 +46,6 @@ class FlashcardsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def flashcard_params
-      params.require(:flashcard).permit(:card_number, :question, :answer, :flashcard_set_id)
+      params.require(:flashcard).permit(:card_number, :question, :answer, :flashcard_set_id, :image)
     end
 end
