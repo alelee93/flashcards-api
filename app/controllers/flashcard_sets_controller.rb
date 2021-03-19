@@ -10,7 +10,14 @@ class FlashcardSetsController < ApplicationController
 
   # GET /flashcard_sets/1
   def show
-    render json: @flashcard_set
+    # render json: @flashcard_set
+    # render json: FlashcardSetSerializer.new(@flashcard_set, include: [:flashcards])
+
+    hash = FlashcardSetSerializer.new(@flashcard_set, include: [:flashcards]).serializable_hash
+    render json: {
+      flashcard_set: hash[:data][:attributes],
+      flashcards: hash[:included].map{|flashcard| flashcard[:attributes]}
+    }
   end
 
   # POST /flashcard_sets

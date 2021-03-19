@@ -1,6 +1,10 @@
 class FlashcardsController < ApplicationController
   before_action :set_flashcard, only: [:show, :update, :destroy]
 
+  def image_url
+    Rails.application.routes.url_helpers.url_for(image) if image.attached?
+  end
+
   # GET /flashcards
   def index
     @flashcards = Flashcard.all
@@ -16,6 +20,7 @@ class FlashcardsController < ApplicationController
   # POST /flashcards
   def create
     @flashcard = Flashcard.new(flashcard_params)
+    # @flashcard = current_flashcard_set.build(flashcard_params)
 
     if @flashcard.save
       render json: @flashcard, status: :created, location: @flashcard
